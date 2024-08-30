@@ -1,0 +1,15 @@
+body {
+    margin: 0;
+    overflow: hidden; /* Prevents scrollbars from appearing */
+}
+
+#gameCanvas {
+    display: block; /* Prevents default inline styling */
+    margin: 0 auto; /* Centers canvas horizontally */
+    background-color: #f0f0f0; /* Gives a visible background */
+    width: 100vw; /* Makes canvas fill the viewport width */
+    height: 100vh; /* Makes canvas fill the viewport height */
+    position: absolute; /* Ensures it doesn't get pushed off-screen by other content */
+    top: 0;
+    left: 0;
+}
