@@ -19,8 +19,8 @@ canvas.height = window.innerHeight;
 
 ctx.imageSmoothingEnabled = false; // Disable image smoothing to preserve pixel art quality
 
-let players = {};
-let collision = {};
+let players = {}; // To store all player data
+let collision = {}; // To store collision object data
 
 // Define the local character object
 const character = {
@@ -54,8 +54,8 @@ spriteSheet.onerror = () => {
 // Socket event listeners to handle server communication
 socket.on('currentPlayers', (serverPlayers) => {
     console.log('Received current players:', serverPlayers); // Debugging log
-    players = serverPlayers;
-    drawGameState();
+    players = serverPlayers; // Update the entire players object with the server state
+    drawGameState(); // Redraw the game state with the updated players
 });
 
 socket.on('currentBoundary', (serverBoundary) => {
@@ -108,9 +108,19 @@ function drawGameState() {
 
     // Draw all players with their animations
     Object.values(players).forEach((player) => {
-        if (player && player.width && player.height) { // Ensure player object is valid
+        if (player && typeof player.x === 'number' && typeof player.y === 'number' && player.width && player.height) { 
             console.log('Drawing player:', player); // Debugging log
-            drawSprite(ctx, spriteSheet, player.frameX, player.frameY, player.x, player.y, player.width, player.height);
+
+            drawSprite(
+                ctx,
+                spriteSheet,
+                player.frameX * player.width, // Adjust frame position based on sprite sheet layout
+                player.frameY * player.height, // Adjust frame position based on sprite sheet layout
+                player.x,
+                player.y,
+                player.width,
+                player.height
+            );
         } else {
             console.warn('Invalid player data:', player); // Warning log for invalid player data
         }

@@ -7,8 +7,13 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 const PORT = process.env.PORT || 3000;
+const cors = require('cors');
+
+app.use(cors());
 
 let players = {}; // Object to store all connected players
+
+
 
 // Define the boundary of the map
 const boundary = {
@@ -52,7 +57,8 @@ function constrainPlayer(player) {
     }
 }
 
-app.use(express.static('public')); // Serve static files from the 'public' folder
+app.use(express.static('public'));
+
 
 io.on('connection', (socket) => {
     console.log('A user connected:', socket.id);
